@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Upravljanje Osiguranjem</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <div class="container">
+            @Html.ActionLink("Upravljanje Osiguranjem", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="@Url.Action("Index", "Partner")">Partneri</a>
+                <a class="nav-item nav-link" href="@Url.Action("Create", "Partner")">Dodaj Partnera</a>
+                <a class="nav-item nav-link" href="@Url.Action("Create", "Policy")">Dodaj Policu</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Upravljanje Osiguranjem</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
