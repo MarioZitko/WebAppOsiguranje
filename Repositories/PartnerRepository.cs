@@ -21,6 +21,27 @@ public class PartnerRepository
             return connection.Query<Partner>("SELECT * FROM Partners").OrderByDescending(p => p.CreatedAtUtc).ToList();
         }
     }
+    public IEnumerable<Partner> GetAllPartnersWithPolicyInfo()
+    {
+        using (var connection = new SqlConnection(_connectionString))
+        {
+            connection.Open();
+            var sql = @"
+            SELECT p.*, 
+                   (SELECT COUNT(*) FROM Policies WHERE PartnerId = p.PartnerId) AS PolicyCount, 
+                   (SELECT ISNULL(SUM(Amount), 0) FROM Policies WHERE PartnerId = p.PartnerId) AS TotalAmount 
+            FROM Partners p
+            WHERE p.PartnerId IN (
+                SELECT PartnerId
+                FROM Policies
+                GROUP BY PartnerId
+                HAVING COUNT(*) > 5 OR SUM(Amount) > 5000
+            )";
+
+            var result = connection.Query<Partner>(sql).ToList();
+            return result;
+        }
+    }
 
     public int Add(Partner partner, out string errorMessage)
     {

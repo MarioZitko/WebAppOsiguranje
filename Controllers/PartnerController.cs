@@ -15,9 +15,25 @@ public class PartnerController : Controller
 
     public ActionResult Index()
     {
+        var partnersWithPolicyInfo = _partnerService.GetAllPartnersWithPolicyInfo();
+        foreach (var partner in partnersWithPolicyInfo)
+        {
+            partner.IsHighlighted = true;
+        }
+
         var partners = _partnerService.GetAllPartners();
-        return View(partners);
+
+        var allPartners = partnersWithPolicyInfo
+            .Concat(partners)
+            .OrderByDescending(p => p.CreatedAtUtc)
+            .GroupBy(p => p.PartnerId)
+            .Select(g => g.First())
+            .ToList();
+
+        return View(allPartners);
     }
+
+
     public ActionResult GetPartnerDetails(int id)
     {
         var partner = _partnerService.GetPartnerById(id);
@@ -60,7 +76,7 @@ public class PartnerController : Controller
         {
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
-        Partner partner = _partnerService.GetPartnerById(id.Value); // Pretpostavlja se implementacija metode GetPartnerById
+        Partner partner = _partnerService.GetPartnerById(id.Value);
         if (partner == null)
         {
             return HttpNotFound();
@@ -75,7 +91,6 @@ public class PartnerController : Controller
         bool deleted = _partnerService.DeletePartner(id);
         if (!deleted)
         {
-            // Obrada greške, partner nije pronađen ili nije obrisan
             return RedirectToAction("DeleteFailed");
         }
         return RedirectToAction("Index");

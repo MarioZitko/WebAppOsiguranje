@@ -54,5 +54,7 @@ namespace WebAppOsiguranje.Models
         [Required]
         [Display(Name = "Spol")]
         public char Gender { get; set; } // M, F, or N
+
+        public bool IsHighlighted { get; set; }
     }
 }

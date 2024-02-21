@@ -19,4 +19,13 @@ public class PolicyService
     {
         _policyRepository.AddPolicy(policy);
     }
+
+    public bool RemovePolicy(int policyId)
+    {
+        return _policyRepository.DeletePolicy(policyId);
+    }
+    public Policy GetPolicyById(int policyId)
+    {
+        return _policyRepository.GetPolicyById(policyId);
+    }
 }

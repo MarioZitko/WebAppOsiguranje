@@ -123,7 +123,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PartnerController.cs" />
     <Compile Include="Controllers\PolicyController.cs" />
     <Compile Include="Repositories\PolicyRepository.cs" />
@@ -186,14 +185,13 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Partner\Create.cshtml" />
     <Content Include="Views\Partner\Index.cshtml" />
     <Content Include="Views\Partner\Delete.cshtml" />
     <Content Include="Views\Partner\_PartnerDetails.cshtml" />
     <Content Include="Views\Policy\Create.cshtml" />
+    <Content Include="Views\Policy\Index.cshtml" />
+    <Content Include="Views\Policy\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

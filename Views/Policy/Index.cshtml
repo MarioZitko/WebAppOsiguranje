@@ -1,0 +1,55 @@
+﻿@model IEnumerable<WebAppOsiguranje.Models.Policy>
+
+@{
+    ViewBag.Title = "Police";
+}
+
+<h2>Pregled polica</h2>
+
+<p>
+    <a href="@Url.Action("Create", "Policy")" class="btn btn-primary">Dodaj novu policu</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PolicyNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            Id partnera i ime i prezime
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PolicyNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>
+            @{
+                var _partnerService = new PartnerService(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                var partnerId = item.PartnerId;
+                var partner = _partnerService.GetPartnerById(partnerId);
+                if (partner != null)
+                {
+                    @partner.PartnerId @Html.Raw("&nbsp;")@partner.FirstName @Html.Raw("&nbsp;")@partner.LastName
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.PartnerId)
+                }
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Obriši", "Delete", new { id = item.PolicyId }, new { @class = "btn btn-danger btn-sm" })
+        </td>
+    </tr>
+}
+
+</table>

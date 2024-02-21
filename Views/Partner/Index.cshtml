@@ -30,8 +30,8 @@
         {
             foreach (var partner in Model)
             {
-                <tr data-partner-id="@partner.PartnerId" class="@(partner.PartnerId == TempData["NewPartnerId"] as int? ? "new-partner" : "")">
-                    <td>@partner.FirstName @partner.LastName</td>
+                <tr data-partner-id="@partner.PartnerId" class="@(partner.PartnerId == TempData["NewPartnerId"] as int? ? "new-partner" : "") @(partner.IsHighlighted ? "partner-marked" : "")">
+                    <td>@(partner.IsHighlighted ? "*" : "") @partner.FirstName @partner.LastName</td>
                     <td>@partner.PartnerNumber</td>
                     <td>@(partner.PartnerTypeId == 1 ? "Fizička" : "Pravna")</td>
                     <td>@partner.CreatedAtUtc.ToString("dd.MM.yyyy")</td>

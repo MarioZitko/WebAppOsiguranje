@@ -1,0 +1,60 @@
+﻿@model WebAppOsiguranje.Models.Policy
+
+@{
+    ViewBag.Title = "Brisanje police";
+}
+
+<h2>Brisanje police</h2>
+
+<h3>Jeste li sigurni da želite obrisati policu?</h3>
+<div>
+    <h4>Polica</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PolicyNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PolicyNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+        <dt>
+            Partner
+        </dt>
+
+        <dd>
+            @{
+                var _partnerService = new PartnerService(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                var partnerId = Model.PartnerId;
+                var partner = _partnerService.GetPartnerById(partnerId);
+                if (partner != null)
+                {
+                    @partner.PartnerId @Html.Raw("&nbsp;")@partner.FirstName @Html.Raw("&nbsp;")@partner.LastName
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.PartnerId)
+                }
+            }
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> | 
+            <button class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Policy")'">Povratak na listu</button>
+        </div>
+    }
+</div>

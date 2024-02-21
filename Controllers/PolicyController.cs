@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using WebAppOsiguranje.Models;
 
@@ -46,5 +47,31 @@ public class PolicyController : Controller
                                              Text = $"{p.PartnerId} {p.FirstName} {p.LastName}"
                                          }).ToList();
         return View(policy);
+    }
+
+    public ActionResult Delete(int? id)
+    {
+        if (id == null)
+        {
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+        Policy policy = _policyService.GetPolicyById(id.Value);
+        if (policy == null)
+        {
+            return HttpNotFound();
+        }
+        return View(policy);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public ActionResult DeleteConfirmed(int id)
+    {
+        bool deleted = _policyService.RemovePolicy(id);
+        if (!deleted)
+        {
+            return RedirectToAction("DeleteFailed");
+        }
+        return RedirectToAction("Index");
     }
 }

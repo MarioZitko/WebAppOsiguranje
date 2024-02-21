@@ -14,7 +14,10 @@ public class PartnerService
     {
         return _partnerRepository.GetAll();
     }
-
+    public IEnumerable<Partner> GetAllPartnersWithPolicyInfo()
+    {
+        return _partnerRepository.GetAllPartnersWithPolicyInfo();
+    }
     public int AddPartner(Partner partner, out string errorMessage)
     {
         return _partnerRepository.Add(partner, out errorMessage);
