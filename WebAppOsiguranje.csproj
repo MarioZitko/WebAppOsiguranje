@@ -193,6 +193,7 @@
     <Content Include="Views\Partner\Index.cshtml" />
     <Content Include="Views\Partner\Delete.cshtml" />
     <Content Include="Views\Partner\_PartnerDetails.cshtml" />
+    <Content Include="Views\Policy\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

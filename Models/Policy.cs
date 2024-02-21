@@ -20,10 +20,8 @@ namespace WebAppOsiguranje.Models
         [Display(Name = "Iznos police")]
         public decimal Amount { get; set; }
 
-        // Foreign key
         public int PartnerId { get; set; }
 
-        // Navigation property
         public Partner Partner { get; set; }
     }
 }
