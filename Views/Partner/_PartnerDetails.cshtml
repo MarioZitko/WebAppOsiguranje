@@ -1,0 +1,14 @@
+﻿@model WebAppOsiguranje.Models.Partner
+
+<div>
+    <h4>FullName: @Model.FirstName @Model.LastName</h4>
+    <p>Address: @Model.Address</p>
+    <p>Partner Number: @Model.PartnerNumber</p>
+    <p>Croatian PIN: @Model.CroatianPIN</p>
+    <p>Partner Type ID: @Model.PartnerTypeId</p>
+    <p>Created At: @Model.CreatedAtUtc.ToString("dd.MM.yyyy")</p>
+    <p>Created By User: @Model.CreateByUser</p>
+    <p>Is Foreign: @Model.IsForeign</p>
+    <p>External Code: @Model.ExternalCode</p>
+    <p>Gender: @Model.Gender</p>
+</div>

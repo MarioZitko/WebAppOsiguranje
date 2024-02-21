@@ -1,0 +1,85 @@
+﻿@model IEnumerable<WebAppOsiguranje.Models.Partner>
+
+@{
+    ViewBag.Title = "Lista Partnera";
+    var newPartnerId = TempData["NewPartnerId"] as int?;
+}
+
+<p>
+    <a href="@Url.Action("Create", "Partner")" class="btn btn-primary">Dodaj novog partnera</a>
+    <a href="@Url.Action("Create", "Policy")" class="btn btn-primary">Dodaj novu policu</a>
+</p>
+
+<h1>Prikaz Partnera</h1>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Ime</th>
+            <th>Broj Partnera</th>
+            <th>Vrsta Partnera</th>
+            <th>Datum Kreiranja</th>
+            <th>Stranac</th>
+            <th>Spol</th>
+            <th>Obriši</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var partner in Model)
+            {
+                <tr data-partner-id="@partner.PartnerId" class="@(partner.PartnerId == TempData["NewPartnerId"] as int? ? "new-partner" : "")">
+                    <td>@partner.FirstName @partner.LastName</td>
+                    <td>@partner.PartnerNumber</td>
+                    <td>@(partner.PartnerTypeId == 1 ? "Fizička" : "Pravna")</td>
+                    <td>@partner.CreatedAtUtc.ToString("dd.MM.yyyy")</td>
+                    <td>@(partner.IsForeign ? "Da" : "Ne")</td>
+                    <td>
+                        @(@partner.Gender.Equals('M') ? "Muško" : @partner.Gender.Equals('F') ? "Žensko" : "Ostalo")
+                    </td>
+                    <td>
+                        @Html.ActionLink("Obriši", "Delete", new { id = partner.PartnerId }, new { @class = "btn btn-danger btn-sm" })
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7">Nema dostupnih partnera.</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<div class="modal fade" id="partnerDetailsModal" tabindex="-1" role="dialog" aria-labelledby="partnerDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="partnerDetailsModalLabel">Detalji Partnera</h5>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('table tr').click(function() {
+        var partnerId = $(this).data('partner-id');
+        if (partnerId) {
+            $.get('@Url.Action("GetPartnerDetails", "Partner")/' + partnerId, function(data) {
+                $('#partnerDetailsModal .modal-body').html(data);
+                $('#partnerDetailsModal').modal('show');
+            });
+        }
+    });
+});
+</script>

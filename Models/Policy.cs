@@ -12,10 +12,12 @@ namespace WebAppOsiguranje.Models
 
         [Required]
         [StringLength(15, MinimumLength = 10)]
+        [Display(Name = "Broj police")]
         public string PolicyNumber { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(18, 2)")]
+        [Display(Name = "Iznos police")]
         public decimal Amount { get; set; }
 
         // Foreign key

@@ -15,10 +15,18 @@ public class PartnerService
         return _partnerRepository.GetAll();
     }
 
-    public void AddPartner(Partner partner)
+    public int AddPartner(Partner partner, out string errorMessage)
     {
-        _partnerRepository.Add(partner);
+        return _partnerRepository.Add(partner, out errorMessage);
     }
 
-    // Ostale metode koje koriste repository...
+    public bool DeletePartner(int partnerId)
+    {
+        return _partnerRepository.Delete(partnerId);
+    }
+    public Partner GetPartnerById(int partnerId)
+    {
+        return _partnerRepository.GetPartnerById(partnerId);
+    }
+
 }
